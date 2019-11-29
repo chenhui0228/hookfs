@@ -39,8 +39,8 @@ func NewHookFs(original string, mountpoint string, hook Hook) (*HookFs, error) {
 
 // String implements hanwen/go-fuse/fuse/pathfs.FileSystem. You are not expected to call h manually.
 func (h *HookFs) String() string {
-	return fmt.Sprintf("HookFs{Original=%s, Mountpoint=%s, FsName=%s, Underlying fs=%s, hook=%s}",
-		h.Original, h.Mountpoint, h.FsName, h.fs.String(), h.hook)
+	return fmt.Sprintf("HookFs{Original=%s, Mountpoint=%s, FsName=%s, Underlying fs=%s}",
+		h.Original, h.Mountpoint, h.FsName, h.fs.String())
 }
 
 // SetDebug implements hanwen/go-fuse/fuse/pathfs.FileSystem. You are not expected to call h manually.
@@ -153,7 +153,7 @@ func (h *HookFs) Rename(oldName string, newName string, context *fuse.Context) f
 		postHooked, posthookCtx, posthookErr := hook.PostRename(oldName, newName)
 		if postHooked {
 			log.WithFields(log.Fields{
-				"h":          h,
+				"h":           h,
 				"posthookErr": postHooked,
 				"posthookCtx": posthookCtx,
 			}).Debug("Rename: Posthooked")

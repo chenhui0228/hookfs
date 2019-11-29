@@ -7,7 +7,9 @@ import (
 	"github.com/osrg/hookfs/pkg/qfs"
 	"github.com/plimble/ace"
 	"math/rand"
+	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	//hookfs "github.com/osrg/hookfs/hookfs"
@@ -46,6 +48,29 @@ func _init(h *qfs.QfsHook) {
 		h.FuseStats[s] = 0
 	}
 
+	getLogger("/qingstor/log/", "hookfs")
+}
+
+func getLogger(logDir string, name string) {
+	log_file := filepath.Join(logDir, name+".log")
+	output, _ := os.OpenFile(log_file, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	// Normal log rotate
+	// When graceful restart, should reopen log file
+	log.SetOutput(output)
+	log.SetFormatter(&log.TextFormatter{TimestampFormat: http.TimeFormat})
+
+	//logger := &log.Logger{
+	//	Out: output,
+	//	Formatter: &log.TextFormatter{
+	//		TimestampFormat: http.TimeFormat,
+	//	},
+	//	Hooks: make(log.LevelHooks),
+	//	Level: log.DebugLevel,
+	//}
+	////logger.Hooks.Add(hook)
+	//// Disable locking in logger, since we have locking in BufLogWriter
+	//logger.SetNoLock()
+	//return logger
 }
 
 func main() {
@@ -75,7 +100,10 @@ func main() {
 
 	_init(srv.hook)
 
-	HttpSrv(srv)
+	//logger := srv.hook.Logger
+	//logger.SetLevel(0)
+
+	go HttpSrv(srv)
 	serve(original, mountpoint, srv.hook)
 }
 

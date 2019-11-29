@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/osrg/hookfs/pkg/qfs"
 	"github.com/plimble/ace"
+	log "github.com/sirupsen/logrus"
 )
 
 type Req struct {
@@ -29,12 +30,14 @@ func HttpSrv(srv *Srv) {
 		c.JSON(200, nil)
 	})
 	a.Run(":32768")
+	log.Infof("http server started.")
 }
 
 func middlewareFunc(h *qfs.QfsHook) ace.HandlerFunc {
 	return func(c *ace.C) {
 		r := &Req{}
 		c.ParseJSON(r)
+		log.Infof("http recv(%v)", r)
 		setQfsHookFuseStats(h, r)
 	}
 }

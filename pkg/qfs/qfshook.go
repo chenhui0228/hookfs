@@ -41,7 +41,7 @@ func (h *QfsHook) PreOpen(path string, flags uint32) (bool, hookfs.HookContext, 
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreOpen: returning %s", errCode)
+		}).Infof("QfsPreOpen: returning %s", errCode)
 	}()
 	if h.FuseStats["PreOpen"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -76,7 +76,7 @@ func (h *QfsHook) PostOpen(realRetCode int32, ctx hookfs.HookContext) (bool, err
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostOpen: returning %s", errCode)
+		}).Infof("QfsPostOpen: returning %s", errCode)
 	}()
 	if h.FuseStats["PostOpen"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -112,7 +112,7 @@ func (h *QfsHook) PreRead(path string, length int64, offset int64) ([]byte, bool
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreRead: returning %s", errCode)
+		}).Infof("QfsPreRead: returning %s", errCode)
 	}()
 	if h.FuseStats["PreRead"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -147,7 +147,7 @@ func (h *QfsHook) PostRead(realRetCode int32, realBuf []byte, ctx hookfs.HookCon
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostRead: returning %s", errCode)
+		}).Infof("QfsPostRead: returning %s", errCode)
 	}()
 	if h.FuseStats["PostRead"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -183,7 +183,7 @@ func (h *QfsHook) PreWrite(path string, buf []byte, offset int64) (bool, hookfs.
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreWrite: returning %s", errCode)
+		}).Infof("QfsPreWrite: returning %s", errCode)
 	}()
 	if h.FuseStats["PreWrite"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -218,7 +218,7 @@ func (h *QfsHook) PostWrite(realRetCode int32, ctx hookfs.HookContext) (bool, er
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostWrite: returning %s", errCode)
+		}).Infof("QfsPostWrite: returning %s", errCode)
 	}()
 	if h.FuseStats["PostWrite"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -254,7 +254,7 @@ func (h *QfsHook) PreMkdir(path string, mode uint32) (bool, hookfs.HookContext, 
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreMkdir: returning %s", errCode)
+		}).Infof("QfsPreMkdir: returning %s", errCode)
 	}()
 	if h.FuseStats["PreMkdir"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -288,7 +288,7 @@ func (h *QfsHook) PostMkdir(realRetCode int32, ctx hookfs.HookContext) (bool, er
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostMkdir: returning %s", errCode)
+		}).Infof("QfsPostMkdir: returning %s", errCode)
 	}()
 	if h.FuseStats["PostMkdir"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -324,7 +324,7 @@ func (h *QfsHook) PreRmdir(path string) (bool, hookfs.HookContext, error) {
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreRmdir: returning %s", errCode)
+		}).Infof("QfsPreRmdir: returning %s", errCode)
 	}()
 	if h.FuseStats["PreRmdir"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -358,7 +358,7 @@ func (h *QfsHook) PostRmdir(realRetCode int32, ctx hookfs.HookContext) (bool, er
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostRmdir: returning %s", errCode)
+		}).Infof("QfsPostRmdir: returning %s", errCode)
 	}()
 	if h.FuseStats["PostRmdir"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -394,7 +394,7 @@ func (h *QfsHook) PreOpenDir(path string) (bool, hookfs.HookContext, error) {
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreOpenDir: returning %s", errCode)
+		}).Infof("QfsPreOpenDir: returning %s", errCode)
 	}()
 	if h.FuseStats["PreOpenDir"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -428,7 +428,7 @@ func (h *QfsHook) PostOpenDir(realRetCode int32, ctx hookfs.HookContext) (bool, 
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostOpenDir: returning %s", errCode)
+		}).Infof("QfsPostOpenDir: returning %s", errCode)
 	}()
 	if h.FuseStats["PostOpenDir"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -464,7 +464,7 @@ func (h *QfsHook) PreFsync(path string, flags uint32) (bool, hookfs.HookContext,
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPreFsync: returning %s", errCode)
+		}).Infof("QfsPreFsync: returning %s", errCode)
 	}()
 	if h.FuseStats["PreFsync"] > timeoutThreshold {
 		errCode = "TIMEOUT"
@@ -498,7 +498,8 @@ func (h *QfsHook) PostFsync(realRetCode int32, ctx hookfs.HookContext) (bool, er
 		log.WithFields(log.Fields{
 			"h":   h,
 			"ctx": ctx,
-		}).Info("QfsPostFsync: returning %s", errCode)
+		}).Infof("QfsPostFsync: returning %s", errCode)
+		log.New()
 	}()
 	if h.FuseStats["PostFsync"] > timeoutThreshold {
 		errCode = "TIMEOUT"
